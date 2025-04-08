@@ -1,5 +1,3 @@
-# Log Membership Expiry Date Changes
-
 CREATE TABLE membership_audit (
     AuditID INT AUTO_INCREMENT PRIMARY KEY,
     MemberID INT,
@@ -20,8 +18,6 @@ BEGIN
 END //
 DELIMITER ;
 
-# Prevent Booking Sessions for Expired Members
-
 DELIMITER //
 CREATE TRIGGER trg_prevent_expired_sessions
 BEFORE INSERT ON sessions
@@ -39,4 +35,3 @@ BEGIN
     END IF;
 END //
 DELIMITER ;
-

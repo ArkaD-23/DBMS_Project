@@ -1,4 +1,3 @@
-# Get all sessions attended by a member
 DELIMITER //
 CREATE PROCEDURE GetSessionsByMember(IN member_id INT)
 BEGIN
@@ -11,7 +10,6 @@ DELIMITER ;
 
 CALL GetSessionsByMember(2);
 
-# Extend Membership by N Days
 DELIMITER //
 CREATE PROCEDURE ExtendMembership(IN member_id INT, IN extra_days INT)
 BEGIN
@@ -23,7 +21,6 @@ DELIMITER ;
 
 CALL ExtendMembership(5,31);
 
-# Get Active Members Who Haven’t Attended Any Sessions
 DELIMITER //
 CREATE PROCEDURE GetActiveNonAttendees()
 BEGIN
@@ -36,9 +33,8 @@ BEGIN
 END //
 DELIMITER ;
 
- CALL GetActiveNonAttendees();
+CALL GetActiveNonAttendees();
 
-#  Update a member’s membership type
 DELIMITER //
 CREATE PROCEDURE UpdateMembershipType(IN m_id INT, IN new_type ENUM('Basic', 'Gold', 'Platinum'))
 BEGIN
@@ -50,21 +46,19 @@ DELIMITER ;
 
 CALL UpdateMembershipType(7,'Platinum');
 
-# Get total duration of sessions for a member
 DELIMITER //
 CREATE PROCEDURE GetTotalWorkoutDuration(IN m_id INT)
 BEGIN
-	SELECT M.Name as MemberName, SUM(SS.Duration) AS TotalWorkoutTime
-	FROM Members M
-	JOIN Sessions SS ON M.MemberID = SS.MemberID
-	WHERE M.MemberID = m_id
-	GROUP BY M.MemberID, M.Name;
+    SELECT M.Name as MemberName, SUM(SS.Duration) AS TotalWorkoutTime
+    FROM Members M
+    JOIN Sessions SS ON M.MemberID = SS.MemberID
+    WHERE M.MemberID = m_id
+    GROUP BY M.MemberID, M.Name;
 END //
 DELIMITER ;
 
 CALL GetTotalWorkoutDuration(5);
 
-#  Trainers with number of sessions
 DELIMITER //
 CREATE PROCEDURE TrainerSessionCount()
 BEGIN
